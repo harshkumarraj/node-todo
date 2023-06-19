@@ -24,6 +24,25 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 
 
+
+//API for adding new Todo.
+
+app.post('/api/todos', async (req, res) => {
+    try {
+      const { title, description } = req.body;
+      const todo = new Todo({
+        title,
+        description,
+        completed: false,
+      });
+      await todo.save();
+      res.status(201).json(todo);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to create a todo' });
+    }
+  });
+
+
 //API to get all Todo at once
 
 
@@ -35,6 +54,8 @@ app.get('/api/todos', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch todos' });
   }
 });
+
+
 
 
 //API to get Single Todo
@@ -54,22 +75,6 @@ app.get('/api/todos/:id', async (req, res) => {
   });
 
 
-//API for adding new Todo.
-
-app.post('/api/todos', async (req, res) => {
-  try {
-    const { title, description } = req.body;
-    const todo = new Todo({
-      title,
-      description,
-      completed: false,
-    });
-    await todo.save();
-    res.status(201).json(todo);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to create a todo' });
-  }
-});
 
 
 //API for Updating particular Todo item
