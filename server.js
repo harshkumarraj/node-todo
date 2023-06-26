@@ -27,6 +27,10 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 //API for adding new Todo.
 
+app.get('/',(req,res)=>{
+  res.send("Server Working");
+})
+
 app.post('/api/todos', async (req, res) => {
     try {
       const { title, description } = req.body;
